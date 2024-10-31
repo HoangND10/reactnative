@@ -1,0 +1,96 @@
+{
+  "checkin": [
+    {
+      "id": 1,
+      "session_code": "TO-21405140011",
+      "start_time": "07:30",
+      "end_time": "11:30",
+      "total_players": 2,
+      "id_status": 1,
+      "id_user": 1,
+      "holes_started": 8,
+      "total_holes": 9,
+      "holes_play": 0,
+      "holes_current": 2
+    },
+    {
+      "id": 2,
+      "session_code": "TO-21405140022",
+      "start_time": "07:35",
+      "end_time": "11:35",
+      "total_players": 2,
+      "id_status": 2,
+      "id_user": 2,
+      "holes_started": 11,
+      "total_holes": 12,
+      "holes_play": 5,
+      "holes_current": 2
+    },
+    {
+      "id": 3,
+      "session_code": "TO-21405140033",
+      "start_time": "07:35",
+      "end_time": "11:35",
+      "total_players": 2,
+      "id_status": 3,
+      "id_user": 2,
+      "holes_started": 11,
+      "total_holes": 12,
+      "holes_play": 5,
+      "holes_current": 2
+    },
+    {
+      "id": 3,
+      "session_code": "TO-21405140033",
+      "start_time": "07:35",
+      "end_time": "11:35",
+      "total_players": 2,
+      "id_status": 3,
+      "id_user": 2,
+      "holes_started": 11,
+      "total_holes": 12,
+      "holes_play": 5,
+      "holes_current": 2
+    }
+  ],
+  "status": [
+    {
+      "id": 1,
+      "Name": "Đã check in"
+    },
+    {
+      "id": 2,
+      "Name": "Đang chơi"
+    },
+    {
+      "id": 3,
+      "Name": "Tạm dừng"
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "class": 1,
+      "name": "Đ.Q. Thái",
+      "vehicle_code": "tccd66",
+      "additional_code": 119,
+      "vehicle_number": 84
+    },
+    {
+      "id": 2,
+      "class": 1,
+      "name": "Minh Quân",
+      "vehicle_code": "tccd22",
+      "additional_code": 119,
+      "vehicle_number": 85
+    },
+    {
+      "id": 3,
+      "class": 1,
+      "name": "Minh Quân 22222",
+      "vehicle_code": "tccd22332",
+      "additional_code": 119,
+      "vehicle_number": 85
+    }
+  ]
+}
