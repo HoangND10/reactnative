@@ -6,14 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
+
 const Login = () => {
   const navigation = useNavigation(); // Khai báo useNavigation
-  const [activeText, setActiveText] = useState(null);
+  const [activeText, setActiveText] = useState("Caddie");
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +46,9 @@ const Login = () => {
 
       <View style={styles.hoverContainer}>
         <TouchableOpacity onPress={() => handleTextPress("Caddie")}>
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{ alignItems: "center", marginTop: -15, marginBottom: 15 }}
+          >
             <Text
               style={[
                 styles.hoverText,
@@ -53,7 +62,9 @@ const Login = () => {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => handleTextPress("Manager")}>
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{ alignItems: "center", marginTop: -15, marginBottom: 15 }}
+          >
             <Text
               style={[
                 styles.hoverText,
@@ -116,7 +127,11 @@ const Login = () => {
 
       <Image
         style={styles.image}
-        source={require("../../image/2641b5487d59c68ffc8622dc1106d432.png")}
+        source={
+          isTablet
+            ? require("../../image/tabletlogin.png")
+            : require("../../image/2641b5487d59c68ffc8622dc1106d432.png")
+        }
       />
     </View>
   );
@@ -131,14 +146,14 @@ const styles = StyleSheet.create({
   },
   gradient: {
     width: "100%",
-    height: 354,
+    height: "45%",
     alignItems: "center",
     position: "absolute",
     top: "33%",
     zIndex: 2,
   },
   image: {
-    width: 414,
+    width: "100%",
     height: 200.77,
     position: "absolute",
     bottom: 0,

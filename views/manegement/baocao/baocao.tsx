@@ -14,6 +14,12 @@ import Lto2 from "./lto";
 import Caddie2 from "./caddie";
 import { Modal } from "react-native";
 
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
+
 const initialLayout = { width: Dimensions.get("window").width };
 
 const Day = ({ setModalBuggy, onApply }) => {
@@ -90,7 +96,7 @@ const Day = ({ setModalBuggy, onApply }) => {
       </View>
 
       {/* Hiển thị các ngày trong tuần */}
-      <View style={styles.weekHeader}>
+      <View style={isTablet ? styles.weekHeadertl : styles.weekHeader}>
         {daysOfWeek.map((day, index) => (
           <Text key={index} style={styles.weekDay}>
             {day}
@@ -396,7 +402,12 @@ const BaoCao = ({ route }) => {
               style={styles.modalOverlay}
               onPressOut={() => setModalBuggy(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <View style={styles.rowContainer}>
                   {/* Xem theo text */}
                   <Text style={styles.dx}>Xem theo:</Text>
@@ -541,6 +552,14 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     padding: 30,
   },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 19,
+    padding: 30,
+    width: 500,
+    alignSelf: "center",
+  },
   dx: {
     fontSize: 16,
     fontWeight: "400",
@@ -587,6 +606,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 15,
     paddingHorizontal: 3,
+  },
+  weekHeadertl: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+    marginTop: 15,
+    paddingHorizontal: 15,
   },
   weekDay: {
     fontSize: 11,

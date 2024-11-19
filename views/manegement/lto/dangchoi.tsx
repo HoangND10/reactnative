@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Dimensions,
   Modal,
   ScrollView,
   StyleSheet,
@@ -13,6 +14,12 @@ import Icon2 from "react-native-vector-icons/FontAwesome";
 import Icon3 from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const Dangchoi = () => {
   const [showButton, setShowButton] = useState(true); // Trạng thái ẩn/hiện của nút
@@ -87,6 +94,11 @@ const Dangchoi = () => {
     setLastScrollY(currentScrollY);
   };
 
+  const handlePress = () => {
+    // Điều hướng đến màn hình Tính Điểm (TinhDiem)
+    navigation.navigate("TinhDiem");
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -94,7 +106,7 @@ const Dangchoi = () => {
         onScroll={handleScroll} // Gán hàm handleScroll cho sự kiện onScroll
         scrollEventThrottle={16} // Throttle cho sự kiện cuộn
       >
-        <View style={styles.container}>
+        <View style={isTablet ? styles.containerTablet : styles.container}>
           {checkinData.map((session, index) => {
             // console.log("Session ID:", session.id, "Index:", index);
             const {
@@ -129,7 +141,10 @@ const Dangchoi = () => {
               iconColor = "#dc3545"; // Màu danger (thay đổi màu này nếu cần)
             }
             return (
-              <View style={styles.table} key={`${session.id}-${index}`}>
+              <View
+                style={isTablet ? styles.tabletl : styles.table}
+                key={`${session.id}-${index}`}
+              >
                 <View style={styles.nd}>
                   <View style={styles.htable}>
                     <View style={styles.htable2}>
@@ -171,7 +186,11 @@ const Dangchoi = () => {
                         onPressOut={() => setModalBuggy(false)}
                       >
                         <TouchableOpacity
-                          style={styles.modalContainer}
+                          style={
+                            isTablet
+                              ? styles.modalContainertl
+                              : styles.modalContainer
+                          }
                           activeOpacity={1}
                         >
                           <TouchableOpacity
@@ -254,9 +273,11 @@ const Dangchoi = () => {
                       {/* Hiển thị thông tin của tất cả người dùng có class = 1 */}
                       {classUsers.map((classUser, userIndex) => (
                         <View style={styles.info} key={userIndex}>
-                          <Text style={styles.n2}>
-                            {classUser.name || "Null"}
-                          </Text>
+                          <TouchableOpacity onPress={handlePress}>
+                            <Text style={styles.n2}>
+                              {classUser.name || "Null"}
+                            </Text>
+                          </TouchableOpacity>
                           <View style={styles.info}>
                             <View style={styles.box}>
                               <Text style={styles.n3}>
@@ -298,7 +319,9 @@ const Dangchoi = () => {
       </ScrollView>
       {/* Nút dấu cộng */}
       {showButton && (
-        <View style={styles.floatingButton2}>
+        <View
+          style={isTablet ? styles.floatingButton2tl : styles.floatingButton2}
+        >
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => navigation.navigate("Tạo LTO")}
@@ -318,6 +341,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#EAEAEA",
     paddingBottom: 160,
   },
+  containerTablet: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#EAEAEA",
+    paddingBottom: 160,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+  },
   scrollContent: {
     flexGrow: 1, // Cho phép nội dung cuộn nếu vượt quá màn hình
     paddingBottom: 20,
@@ -326,6 +358,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 9,
     width: 365,
+    height: "auto",
+    top: 10,
+    marginTop: 10,
+  },
+  tabletl: {
+    backgroundColor: "white",
+    borderRadius: 9,
+    width: "45%",
     height: "auto",
     top: 10,
     marginTop: 10,
@@ -450,13 +490,21 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.25)", // Nền trong suốt tối
+    backgroundColor: "rgba(0, 0, 0, 0.15)", // Nền trong suốt tối
   },
   modalContainer: {
     backgroundColor: "white",
     marginHorizontal: 30,
     borderRadius: 30,
     padding: 20,
+  },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 30,
+    padding: 20,
+    width: "30%",
+    alignSelf: "center",
   },
   buggy: {
     fontWeight: "700",
@@ -523,8 +571,13 @@ const styles = StyleSheet.create({
   },
   floatingButton2: {
     position: "absolute",
-    marginTop: 430,
-    marginLeft: 318,
+    bottom: 120,
+    right: 25,
+  },
+  floatingButton2tl: {
+    position: "absolute",
+    bottom: 200,
+    right: 40,
   },
 });
 

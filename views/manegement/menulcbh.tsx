@@ -1,35 +1,25 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { useNavigation } from "@react-navigation/native";
-import DaCheckin from "./lto/dacheckin";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Menu from "./lto/menu";
 import All from "./caddie/all";
 import Menu2 from "./buggy/menu2";
 import Menu3 from "./hole/menu3";
+import TinhDiem from "./lto/tinhdiem";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const BuggyScreen = () => (
-  <View style={styles.scene}>
-    <Text>Buggy Content</Text>
-  </View>
-);
-
-const HoleScreen = () => (
-  <View style={styles.scene}>
-    <Text>Hole Content</Text>
-  </View>
-);
-
 const MenuLcbh = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "lto", title: "LTO" },
     { key: "caddie", title: "Caddie" },
     { key: "buggy", title: "Buggy" },
     { key: "hole", title: "Hole" },
+    // { key: "TinhDiem", title: "Tính điểm" },
   ]);
 
   const renderScene = SceneMap({
@@ -37,7 +27,14 @@ const MenuLcbh = () => {
     caddie: All,
     buggy: Menu2,
     hole: Menu3,
+    // TinhDiem: TinhDiem,
   });
+
+  // Lấy kích thước màn hình hiện tại
+  const { width } = Dimensions.get("window");
+
+  // Kiểm tra thiết bị có phải iPad không
+  const isTablet = width >= 768;
 
   return (
     <View style={styles.container}>
@@ -49,7 +46,7 @@ const MenuLcbh = () => {
         renderTabBar={(props) => (
           <TabBar
             {...props}
-            style={styles.tabBar}
+            style={isTablet ? styles.tabBarTablet : styles.tabBar}
             indicatorStyle={{ backgroundColor: "transparent" }} // Xóa đường gạch chân
             renderLabel={({ route, focused }) => (
               <View
@@ -90,6 +87,16 @@ const styles = StyleSheet.create({
     borderColor: "#ECECEC",
     justifyContent: "space-between", // Căn giữa các tab với khoảng cách đều
     // paddingHorizontal: 5,
+    height: 50, // Chiều cao của TabBar
+  },
+  tabBarTablet: {
+    backgroundColor: "white",
+    borderRadius: 60, // Bo góc cho phần thanh Tab
+    marginHorizontal: 15, // Khoảng cách hai bên
+    borderWidth: 1,
+    borderColor: "#ECECEC",
+    justifyContent: "space-between", // Căn giữa các tab với khoảng cách đều
+    width: "30%",
     height: 50, // Chiều cao của TabBar
   },
   tabContainer: {

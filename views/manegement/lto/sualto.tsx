@@ -8,10 +8,17 @@ import {
   TextInput,
   Modal,
   FlatList,
+  Dimensions,
 } from "react-native"; // Import StyleSheet và View
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon2 from "react-native-vector-icons/AntDesign";
 import Icon from "react-native-vector-icons/Feather";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const SuaLTO = () => {
   const [time, setTime] = useState("");
@@ -44,7 +51,7 @@ const SuaLTO = () => {
     setModalVisible(false);
   };
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "white" }}>
       <View style={styles.container}>
         {/* thông tin chung */}
         <Text style={styles.tt}>TO-21405140011</Text>
@@ -114,7 +121,12 @@ const SuaLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleHoles(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options}
                   keyExtractor={(item) => item}
@@ -167,7 +179,12 @@ const SuaLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisiblePath(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options2}
                   keyExtractor={(item) => item}
@@ -217,7 +234,12 @@ const SuaLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleReturn(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options2}
                   keyExtractor={(item) => item}
@@ -270,7 +292,12 @@ const SuaLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleHoles(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options}
                   keyExtractor={(item) => item}
@@ -338,6 +365,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderRadius: 10,
     padding: 20,
+  },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 10,
+    padding: 20,
+    width: 500,
+    alignSelf: "center",
   },
   optionItem: {
     paddingVertical: 15,

@@ -14,6 +14,13 @@ import Icon2 from "react-native-vector-icons/AntDesign";
 import Icon from "react-native-vector-icons/Feather";
 import Icon3 from "react-native-vector-icons/MaterialIcons";
 import Icon4 from "react-native-vector-icons/Ionicons";
+import { Dimensions } from "react-native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const TaoLTO = () => {
   const [modalBuggy2, setModalBuggy2] = useState(false);
@@ -155,7 +162,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleHoles(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options}
                   keyExtractor={(item) => item}
@@ -208,7 +220,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisiblePath(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options2}
                   keyExtractor={(item) => item}
@@ -258,7 +275,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleReturn(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options2}
                   keyExtractor={(item) => item}
@@ -311,7 +333,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalVisibleHoles(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options}
                   keyExtractor={(item) => item}
@@ -357,7 +384,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalBuggy2(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <TouchableOpacity
                   style={{
                     position: "absolute",
@@ -512,7 +544,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalCaddie(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options3}
                   keyExtractor={(item) => item}
@@ -563,7 +600,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalBuggy(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <TouchableOpacity
                   style={{ position: "absolute", top: 12, left: 10 }}
                   onPress={() => setModalBuggy(false)}
@@ -632,7 +674,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalCar(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options4}
                   keyExtractor={(item) => item}
@@ -698,7 +745,12 @@ const TaoLTO = () => {
               style={styles.modalOverlay}
               onPressOut={() => setModalBagTag(false)}
             >
-              <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+              <TouchableOpacity
+                style={
+                  isTablet ? styles.modalContainertl : styles.modalContainer
+                }
+                activeOpacity={1}
+              >
                 <FlatList
                   data={options5}
                   keyExtractor={(item) => item}
@@ -818,6 +870,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     width: "95%",
+  },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 10,
+    padding: 20,
+    width: 500,
   },
   optionItem: {
     paddingVertical: 15,

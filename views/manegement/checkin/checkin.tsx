@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,6 +14,12 @@ import Icon3 from "react-native-vector-icons/MaterialIcons";
 import Icon4 from "react-native-vector-icons/FontAwesome5";
 import Icon5 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const Checkin = () => {
   const navigation = useNavigation();
@@ -37,14 +44,16 @@ const Checkin = () => {
       {/* header */}
       <View style={styles.header}>
         <View style={styles.header2}>
-          <Text style={styles.headerText}>Danh sách chờ check in</Text>
+          <Text style={isTablet ? styles.headerTexttl : styles.headerText}>
+            Danh sách chờ check in
+          </Text>
           <Icon style={{ color: "white" }} name="refresh-ccw" size={25} />
         </View>
       </View>
       {/* nội dung */}
       <View style={styles.container2}>
-        <View style={styles.nd}>
-          <View style={styles.tt12}>
+        <View style={isTablet ? styles.ndtl : styles.nd}>
+          <View style={isTablet ? styles.tt12tl : styles.tt12}>
             <View style={styles.tt13}>
               <Icon2 name="search1" size={24} color={"#444444"} />
               <View style={styles.separator} />
@@ -58,12 +67,15 @@ const Checkin = () => {
             </View>
           </View>
           <View style={styles.tt14}>
-            <View style={styles.cnc5}>
+            <TouchableOpacity
+              style={styles.cnc5}
+              onPress={() => navigation.navigate("QRScannerScreen")}
+            >
               <Icon3 name="qr-code-scanner" size={24} />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.nd3}>
+        <View style={isTablet ? styles.nd3tl : styles.nd3}>
           <View style={styles.nd2}>
             <View style={styles.tag}>
               <Icon4 name="tag" size={18} color={"white"} />
@@ -87,9 +99,11 @@ const Checkin = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.container3}>
-          <ScrollView contentContainerStyle={styles.scv}>
-            <View style={styles.cnc6}>
+        <View style={isTablet ? styles.container3tl : styles.container3}>
+          <ScrollView
+            contentContainerStyle={isTablet ? styles.scvtl : styles.scv}
+          >
+            <View style={isTablet ? styles.cnc6tl : styles.cnc6}>
               <View style={styles.cnc7}>
                 <TouchableOpacity
                   style={styles.checkboxContainer2}
@@ -108,7 +122,7 @@ const Checkin = () => {
                     )}
                   </View>
                 </TouchableOpacity>
-                <View>
+                <View style={isTablet ? styles.ttkhtl : ""}>
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Thông tin khách chơi")}
                   >
@@ -150,7 +164,7 @@ const Checkin = () => {
                 <Icon name="alert-circle" size={28} />
               </View>
             </View>
-            <View style={styles.cnc6}>
+            <View style={isTablet ? styles.cnc6tl : styles.cnc6}>
               <View style={styles.cnc7}>
                 <TouchableOpacity
                   style={styles.checkboxContainer2}
@@ -169,7 +183,7 @@ const Checkin = () => {
                     )}
                   </View>
                 </TouchableOpacity>
-                <View>
+                <View style={isTablet ? styles.ttkhtl : ""}>
                   <Text style={{ fontSize: 16 }}>
                     <Text style={{ fontWeight: "700" }}>2500</Text> - A. Phùng
                     Quân
@@ -231,6 +245,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold", // Chữ đậm
     marginLeft: 65,
   },
+  headerTexttl: {
+    color: "#FFFFFF", // Màu chữ trắng
+    fontSize: 20, // Kích thước chữ
+    fontWeight: "bold", // Chữ đậm
+    marginLeft: "40%",
+  },
   container: {
     backgroundColor: "white",
     flex: 1,
@@ -249,14 +269,37 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#CFCFCF",
   },
+  container3tl: {
+    flex: 1,
+    backgroundColor: "#EAEAEA",
+    marginLeft: -10,
+    marginRight: -10,
+    marginTop: 5,
+    borderTopWidth: 1,
+    borderColor: "#CFCFCF",
+    paddingHorizontal: 10,
+  },
   scv: {
     paddingBottom: 15,
+  },
+  scvtl: {
+    paddingBottom: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   nd: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
+    marginTop: 5,
+  },
+  ndtl: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     marginTop: 5,
   },
   nd2: {
@@ -268,6 +311,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
+    marginTop: -5,
+  },
+  nd3tl: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     marginTop: -5,
   },
   cnc5: {
@@ -284,6 +335,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "#EDEDED",
     width: 315,
+    height: 45,
+    justifyContent: "center",
+  },
+  tt12tl: {
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: "#EDEDED",
+    width: "95%",
     height: 45,
     justifyContent: "center",
   },
@@ -367,6 +427,16 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
+  cnc6tl: {
+    borderWidth: 1,
+    borderColor: "#CFCFCF",
+    borderRadius: 5,
+    marginTop: 15,
+    backgroundColor: "white",
+    marginLeft: 15,
+    marginRight: 15,
+    width: "47%",
+  },
   cnc7: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -377,6 +447,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0FCF1",
     borderWidth: 1,
     borderColor: "#30B153",
+  },
+  ttkhtl: {
+    marginLeft: "-35%",
   },
 });
 

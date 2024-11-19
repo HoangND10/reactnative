@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native"; // Import StyleSheet và View
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native"; // Import StyleSheet và View
 import Icon from "react-native-vector-icons/EvilIcons";
 import Icon2 from "react-native-vector-icons/Feather";
 import Icon3 from "react-native-vector-icons/MaterialIcons";
@@ -7,6 +14,12 @@ import Icon4 from "react-native-vector-icons/AntDesign";
 import Icon5 from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const Taikhoan = () => {
   const handleLogout = () => {
@@ -16,7 +29,7 @@ const Taikhoan = () => {
   const [modalBuggy, setModalBuggy] = useState(false);
   return (
     <View style={styles.container}>
-      <View style={styles.container3}>
+      <View style={isTablet ? styles.container3tl : styles.container3}>
         <View>
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
             Thanh Nguyễn
@@ -31,7 +44,7 @@ const Taikhoan = () => {
           />
         </View>
       </View>
-      <View style={styles.container4}>
+      <View style={isTablet ? styles.container4tl : styles.container4}>
         <View>
           <Text
             style={{ color: "white", fontWeight: "bold", textAlign: "center" }}
@@ -68,7 +81,7 @@ const Taikhoan = () => {
         </View>
       </View>
       <View style={styles.container5}>
-        <View style={styles.container6}>
+        <View style={isTablet ? styles.container6tl : styles.container6}>
           <View style={styles.ttcd}>
             <View style={styles.ttcd2}>
               <Icon5 name="user-circle-o" size={25} />
@@ -212,7 +225,9 @@ const Taikhoan = () => {
                 onPressOut={() => setModalBuggy(false)}
               >
                 <TouchableOpacity
-                  style={styles.modalContainer}
+                  style={
+                    isTablet ? styles.modalContainertl : styles.modalContainer
+                  }
                   activeOpacity={1}
                 >
                   <Text style={styles.dx}>Bạn có chắc đăng xuất?</Text>
@@ -225,14 +240,12 @@ const Taikhoan = () => {
                         <Text style={{ fontSize: 16 }}>Không</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.dx3}>
-                      <TouchableOpacity onPress={handleLogout}>
-                        <View>
-                          <Text style={{ fontSize: 16, color: "white" }}>
-                            Đồng ý
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
+                    <TouchableOpacity style={styles.dx3} onPress={handleLogout}>
+                      <View>
+                        <Text style={{ fontSize: 16, color: "white" }}>
+                          Đồng ý
+                        </Text>
+                      </View>
                     </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
@@ -256,9 +269,6 @@ const styles = StyleSheet.create({
     borderRadius: 50, // Để tạo hình tròn
     borderWidth: 10, // Độ dày của đường viền
     borderColor: "#FFFFFF33", // Màu của đường viền
-    // position: "absolute",
-    // top: 53,
-    // left: 21,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -268,6 +278,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
     justifyContent: "space-between",
     padding: 20,
+  },
+  container3tl: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 50,
+    justifyContent: "space-between",
+    paddingVertical: 20,
+    paddingHorizontal: "27%",
   },
   container4: {
     flexDirection: "row",
@@ -282,6 +300,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
+  container4tl: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 16,
+    marginHorizontal: 20,
+    borderColor: "white",
+    borderStyle: "dashed",
+    paddingHorizontal: "5%",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    width: "46%",
+    alignSelf: "center",
+  },
   container5: {
     marginTop: 30,
     flex: 1,
@@ -293,6 +326,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 30,
     marginTop: 25,
+  },
+  container6tl: {
+    flex: 1,
+    marginHorizontal: 30,
+    marginTop: 25,
+    paddingHorizontal: "25%",
   },
   avatar: {
     width: 65, // Độ rộng của avatar
@@ -334,6 +373,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderRadius: 19,
     padding: 30,
+  },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 19,
+    padding: 30,
+    width: "40%",
+    alignSelf: "center",
   },
   dx: {
     fontSize: 18,

@@ -7,12 +7,19 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import Icon2 from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon3 from "react-native-vector-icons/Ionicons";
 import Icon4 from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const ChiTiet = () => {
   const navigation = useNavigation();
@@ -26,7 +33,11 @@ const ChiTiet = () => {
   return (
     <View style={styles.ct}>
       <Image
-        source={require("../../../image/Group 14329.png")} // Đường dẫn tới hình ảnh
+        source={
+          isTablet
+            ? require("../../../image/tablte.png")
+            : require("../../../image/Group 14329.png")
+        } // Đường dẫn tới hình ảnh
         style={styles.image} // Sử dụng style đã định nghĩa
         resizeMode="cover" // Chế độ hiển thị hình ảnh
       />
@@ -85,7 +96,11 @@ const ChiTiet = () => {
                     onPressOut={() => setModalBuggy2(false)}
                   >
                     <TouchableOpacity
-                      style={styles.modalContainer}
+                      style={
+                        isTablet
+                          ? styles.modalContainertl
+                          : styles.modalContainer
+                      }
                       activeOpacity={1}
                     >
                       <TouchableOpacity
@@ -263,7 +278,11 @@ const ChiTiet = () => {
                         onPressOut={() => setModalBuggy(false)}
                       >
                         <TouchableOpacity
-                          style={styles.modalContainer}
+                          style={
+                            isTablet
+                              ? styles.modalContainertl
+                              : styles.modalContainer
+                          }
                           activeOpacity={1}
                         >
                           <TouchableOpacity
@@ -907,6 +926,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 20,
   },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 30,
+    padding: 20,
+    width: 500,
+    alignSelf: "center",
+  },
   buggy: {
     fontWeight: "700",
     fontSize: 16,
@@ -1001,7 +1028,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   gheplto: {
-    width: 140,
+    width: "48%",
     flexDirection: "row",
     justifyContent: "space-between",
   },

@@ -18,6 +18,12 @@ import { useNavigation } from "@react-navigation/native";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
+
 const Menu = () => {
   const navigation = useNavigation();
   const [index, setIndex] = React.useState(0);
@@ -80,6 +86,33 @@ const Menu = () => {
             <Text>{currentTime}</Text>
           </View>
         </View>
+        {isTablet && (
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={() => null}
+            onIndexChange={setIndex}
+            initialLayout={initialLayout}
+            style={styles.tabView}
+            renderTabBar={(props) => (
+              <TabBar
+                {...props}
+                renderLabel={renderLabel}
+                style={styles.tabBar2}
+                tabStyle={{
+                  width: 150,
+                }}
+                indicatorStyle={{
+                  backgroundColor: "#299B48",
+                  height: 2,
+                  width: 30,
+                  borderRadius: 2,
+                  marginLeft: 60,
+                  top: 35,
+                }}
+              />
+            )}
+          />
+        )}
         <TouchableOpacity onPress={() => setModalBuggy(true)}>
           <Icon2 name="search1" size={28} />
         </TouchableOpacity>
@@ -93,7 +126,10 @@ const Menu = () => {
             style={styles.modalOverlay}
             onPressOut={() => setModalBuggy(false)}
           >
-            <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
+            <TouchableOpacity
+              style={isTablet ? styles.modalContainertl : styles.modalContainer}
+              activeOpacity={1}
+            >
               <TouchableOpacity
                 style={{ position: "absolute", top: 12, left: 10 }}
                 onPress={() => setModalBuggy(false)}
@@ -104,7 +140,7 @@ const Menu = () => {
               <View style={styles.buggyline} />
               <View style={styles.tt12}>
                 <View style={styles.tt13}>
-                  <Icon2 name="search1" size={20} color={"#ACACAC"} top={3} />
+                  <Icon2 name="search1" size={20} color={"#ACACAC"} />
                   <TextInput
                     style={{ fontSize: 14, left: 5 }}
                     value={inputText}
@@ -151,20 +187,22 @@ const Menu = () => {
         onIndexChange={setIndex}
         initialLayout={initialLayout}
         style={styles.tabView}
-        renderTabBar={(props) => (
-          <TabBar
-            {...props}
-            renderLabel={renderLabel}
-            style={styles.tabBar}
-            indicatorStyle={{
-              backgroundColor: "#299B48",
-              height: 2,
-              width: 100,
-              borderRadius: 2,
-              marginLeft: 16,
-            }}
-          />
-        )}
+        renderTabBar={(props) =>
+          isTablet ? null : (
+            <TabBar
+              {...props}
+              renderLabel={renderLabel}
+              style={styles.tabBar}
+              indicatorStyle={{
+                backgroundColor: "#299B48",
+                height: 2,
+                width: 100,
+                borderRadius: 2,
+                marginLeft: 16,
+              }}
+            />
+          )
+        }
       />
     </View>
   );
@@ -181,9 +219,9 @@ const styles = StyleSheet.create({
     top: 15,
   },
   iconContainer: {
-    paddingTop: 10,
+    paddingTop: 15,
     paddingRight: 10,
-    paddingBottom: 0,
+    paddingBottom: 15,
     paddingLeft: 10,
     color: "black",
     flexDirection: "row",
@@ -200,6 +238,12 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     backgroundColor: "white", // Màu nền cho TabBar
+  },
+  tabBar2: {
+    backgroundColor: "white", // Màu nền cho TabBar
+    marginTop: -20,
+    top: 10,
+    right: "-45%",
   },
   timeborder: {
     borderRadius: 20,
@@ -223,6 +267,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderRadius: 30,
     padding: 20,
+  },
+  modalContainertl: {
+    backgroundColor: "white",
+    marginHorizontal: 30,
+    borderRadius: 30,
+    padding: 20,
+    width: 350,
+    alignSelf: "center",
   },
   buggy: {
     fontWeight: "700",

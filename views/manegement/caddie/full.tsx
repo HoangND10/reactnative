@@ -1,13 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import Icon2 from "react-native-vector-icons/FontAwesome";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const Full = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
-      <View style={styles.container}>
-        <View style={styles.table}>
+      <View style={isTablet ? styles.containertl : styles.container}>
+        <View style={isTablet ? styles.tabletl : styles.table}>
           <View style={styles.table2}>
             <View style={styles.leftContent}>
               <Image
@@ -37,7 +50,7 @@ const Full = () => {
             </View>
           </View>
         </View>
-        <View style={styles.table}>
+        <View style={isTablet ? styles.tabletl : styles.table}>
           <View style={styles.table2}>
             <View style={styles.leftContent}>
               <Image
@@ -67,7 +80,7 @@ const Full = () => {
             </View>
           </View>
         </View>
-        <View style={styles.table}>
+        <View style={isTablet ? styles.tabletl : styles.table}>
           <View style={styles.table2}>
             <View style={styles.leftContent}>
               <Image
@@ -97,7 +110,7 @@ const Full = () => {
             </View>
           </View>
         </View>
-        <View style={styles.table}>
+        <View style={isTablet ? styles.tabletl : styles.table}>
           <View style={styles.table2}>
             <View style={styles.leftContent}>
               <Image
@@ -143,10 +156,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#EAEAEA",
     paddingBottom: 150,
   },
+  containertl: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#EAEAEA",
+    paddingBottom: 150,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+  },
   table: {
     backgroundColor: "white",
     borderRadius: 9,
     width: 365,
+    marginTop: 10,
+  },
+  tabletl: {
+    backgroundColor: "white",
+    borderRadius: 9,
+    width: "47%",
     marginTop: 10,
   },
   table2: {

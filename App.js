@@ -20,6 +20,10 @@ import Ttkc from "./views/manegement/checkin/ttkc";
 import Ttcn2 from "./views/manegement/taikhoan/ttcn";
 import Doimk from "./views/manegement/taikhoan/doimk";
 import ThongBao from "./views/manegement/taikhoan/thongbao";
+import QRScannerScreen from "./views/manegement/checkin/QRScannerScreen";
+import { Dimensions } from "react-native";
+import * as ScreenOrientation from "expo-screen-orientation";
+import TinhDiem from "./views/manegement/lto/tinhdiem";
 
 const Stack = createStackNavigator();
 const LoginLogoScreen = ({ navigation }) => {
@@ -39,6 +43,24 @@ const LoginLogoScreen = ({ navigation }) => {
 };
 
 const App = () => {
+  useEffect(() => {
+    const setOrientation = async () => {
+      const { width, height } = Dimensions.get("window");
+
+      // Kiểm tra nếu là iPad dựa vào kích thước màn hình và Platform
+      if (width >= 1000 || height >= 1000) {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE
+        );
+      } else {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.PORTRAIT
+        );
+      }
+    };
+
+    setOrientation();
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LoginLogo">
@@ -223,9 +245,14 @@ const App = () => {
           component={Doimk}
           options={{
             headerTitleAlign: "center", // Căn giữa tiêu đề
-            headerStyle: {
-              backgroundColor: "#50B648", // Đặt màu nền cho header
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={["#50B648", "#2A9844"]}
+                start={{ x: 1, y: 0 }} // Bắt đầu từ bên trái
+                end={{ x: 0, y: 0 }} // Kết thúc ở bên phải
+                style={{ flex: 1 }}
+              />
+            ),
             headerTitleStyle: {
               color: "white", // Đặt màu chữ tiêu đề
             },
@@ -236,9 +263,14 @@ const App = () => {
           component={ThongBao}
           options={{
             headerTitleAlign: "center", // Căn giữa tiêu đề
-            headerStyle: {
-              backgroundColor: "#50B648", // Đặt màu nền cho header
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={["#50B648", "#2A9844"]}
+                start={{ x: 1, y: 0 }} // Bắt đầu từ bên trái
+                end={{ x: 0, y: 0 }} // Kết thúc ở bên phải
+                style={{ flex: 1 }}
+              />
+            ),
             headerTitleStyle: {
               color: "white", // Đặt màu chữ tiêu đề
             },
@@ -251,6 +283,31 @@ const App = () => {
                   marginRight={15}
                 />
               </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="QRScannerScreen"
+          component={QRScannerScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TinhDiem"
+          component={TinhDiem}
+          // options={{ headerShown: false }}
+          options={{
+            title: "Tính điểm",
+            headerTitleAlign: "center",
+            headerTitleStyle: {
+              color: "white", // Đặt màu chữ tiêu đề
+            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={["#50B648", "#2A9844"]}
+                start={{ x: 1, y: 0 }} // Bắt đầu từ bên trái
+                end={{ x: 0, y: 0 }} // Kết thúc ở bên phải
+                style={{ flex: 1 }}
+              />
             ),
           }}
         />

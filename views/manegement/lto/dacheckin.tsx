@@ -11,6 +11,13 @@ import Icon2 from "react-native-vector-icons/FontAwesome";
 import Icon3 from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from "react-native";
+
+// Lấy kích thước màn hình hiện tại
+const { width, height } = Dimensions.get("window");
+
+// Kiểm tra thiết bị có phải iPad không
+const isTablet = width >= 768;
 
 const DaCheckin = () => {
   const [showButton, setShowButton] = useState(true); // Trạng thái ẩn/hiện của nút
@@ -91,7 +98,7 @@ const DaCheckin = () => {
         onScroll={handleScroll} // Gán hàm handleScroll cho sự kiện onScroll
         scrollEventThrottle={16} // Throttle cho sự kiện cuộn
       >
-        <View style={styles.container}>
+        <View style={isTablet ? styles.containerTablet : styles.container}>
           {checkinData.map((session, index) => {
             // console.log("Session ID:", session.id, "Index:", index);
             const {
@@ -120,10 +127,14 @@ const DaCheckin = () => {
             const classUsers = userData.filter((user) => user.class === 1);
 
             return (
-              <View style={styles.table} key={`${session.id}-${index}`}>
+              <View
+                style={isTablet ? styles.tabletl : styles.table}
+                key={`${session.id}-${index}`}
+              >
                 <View style={styles.nd}>
                   <View style={styles.row}>
                     <Text style={styles.bold}>{session_code}</Text>
+
                     <View style={styles.tt}>
                       <Icon2 name="circle" size={10.83} color="grey" />
                       <Text style={styles.textWithIcon}>
@@ -223,7 +234,9 @@ const DaCheckin = () => {
       </ScrollView>
       {/* Nút dấu cộng */}
       {showButton && (
-        <View style={styles.floatingButton2}>
+        <View
+          style={isTablet ? styles.floatingButton2tl : styles.floatingButton2}
+        >
           <TouchableOpacity
             style={styles.floatingButton}
             onPress={() => {
@@ -245,6 +258,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#EAEAEA",
     paddingBottom: 160,
   },
+  containerTablet: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#EAEAEA",
+    paddingBottom: 160,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+  },
   scrollContent: {
     flexGrow: 1, // Cho phép nội dung cuộn nếu vượt quá màn hình
     paddingBottom: 20,
@@ -253,6 +275,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 9,
     width: 365,
+    height: "auto",
+    top: 10,
+    marginTop: 10,
+  },
+  tabletl: {
+    backgroundColor: "white",
+    borderRadius: 9,
+    width: "45%",
     height: "auto",
     top: 10,
     marginTop: 10,
@@ -355,8 +385,13 @@ const styles = StyleSheet.create({
   },
   floatingButton2: {
     position: "absolute",
-    marginTop: 430,
-    marginLeft: 318,
+    bottom: 120,
+    right: 25,
+  },
+  floatingButton2tl: {
+    position: "absolute",
+    bottom: 200,
+    right: 40,
   },
 });
 
